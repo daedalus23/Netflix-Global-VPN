@@ -5,7 +5,6 @@ import time
 from math import factorial
 
 
-
 # class DriverUtils:
 #
 #     def fetch_url(path, url, xpath, title):
