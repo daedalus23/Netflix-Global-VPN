@@ -1,9 +1,10 @@
-"""!!!!!Credit Leftier!!!!!"""  #fancy-up
+"""!!!!!Credit Leftier!!!!!"""  # fancy-up
 
 from .model import Movie
 from .db import run
 from .db import engine
 from .db import create
+
 
 def add_to_db(vtype=None,
               title=None,
@@ -20,7 +21,6 @@ def add_to_db(vtype=None,
               img=None,
               poster=None
               ):
-
     movie = Movie(vtype=vtype,
                   title=title,
                   year=year,
@@ -39,5 +39,6 @@ def add_to_db(vtype=None,
 
     create(engine)
     run(movie)
+
 
 __all__ = ["add_to_db"]

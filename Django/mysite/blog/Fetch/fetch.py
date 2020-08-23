@@ -1,7 +1,7 @@
 import requests
 
-class Fetch:
 
+class Fetch:
     countryResponse = None
     movieResponse = None
     json_reponse = None
@@ -15,16 +15,15 @@ class Fetch:
     def get_movies(self, queryString):
         """get request for json movie list per country code"""
         self.movieResponse = requests.request("GET",
-                                         self.movieSearchUrl,
-                                         headers=self.header,
-                                         params=queryString)
+                                              self.movieSearchUrl,
+                                              headers=self.header,
+                                              params=queryString)
 
     def get_countries(self):
         """get request for json country list"""
         self.countryResponse = requests.request("GET",
-                                         self.countryListUrl,
-                                         headers=self.header)
-
-__all__=["Fetch"]
+                                                self.countryListUrl,
+                                                headers=self.header)
 
 
+__all__ = ["Fetch"]

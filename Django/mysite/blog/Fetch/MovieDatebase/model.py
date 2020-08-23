@@ -1,11 +1,11 @@
-"""!!!!!Credit Leftier!!!!!"""  #fancy-up
+"""!!!!!Credit Leftier!!!!!"""  # fancy-up
 
 from sqlalchemy import Column, Integer, String, FLOAT, DateTime
 from .db import Base
 
-class Movie(Base):
 
-    __tablename__="movie"
+class Movie(Base):
+    __tablename__ = "movie"
     id = Column("id", Integer, primary_key=True)
     vtype = Column("vtype", String)
     title = Column("title", String, unique=True)
@@ -13,7 +13,7 @@ class Movie(Base):
     sysnopsis = Column("sysnopsis", String)
     runtime = Column("runtime", DateTime)
     titledate = Column("titledate", String)  # re-format to datetime
-    countryList = Column("countryList", String) #parsh out by "\"
+    countryList = Column("countryList", String)  # parsh out by "\"
     imdbid = Column("imdbid", String)
     avgrating = Column("avgrating", FLOAT)
     imdbRating = Column("imdbRating", FLOAT)
@@ -37,7 +37,7 @@ class Movie(Base):
                  top250,
                  img,
                  poster
-    ):
+                 ):
         self.vtype = vtype
         self.title = title
         self.year = year
@@ -53,4 +53,5 @@ class Movie(Base):
         self.img = img
         self.poster = poster
 
-__all__=["Movie"]
+
+__all__ = ["Movie"]

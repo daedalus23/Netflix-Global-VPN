@@ -1,5 +1,6 @@
 import json
 
+
 class Parser:
 
     def convert_json_dict(self):
@@ -34,4 +35,5 @@ class Parser:
 
         return querystring
 
-__all__=["Parser"]
+
+__all__ = ["Parser"]

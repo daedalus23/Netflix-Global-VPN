@@ -1,8 +1,15 @@
 #!/usr/bin/env python
 import os
+from mysite.settings import ALLOWED_HOSTS
+
 
 def main():
-    os.system('cmd /c "python manage.py runserver 127.0.0.1:8000"')
 
-if __name__=="__main__":
+    url = ALLOWED_HOSTS[0]
+    port = "8000"
+
+    os.system(f'cmd /c "python manage.py runserver {url}:{port}"')
+
+
+if __name__ == "__main__":
     main()

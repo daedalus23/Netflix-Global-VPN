@@ -8,14 +8,13 @@ import os
 
 
 def update_datebase():
-
     movieSearchUrl = "https://unogsng.p.rapidapi.com/search"
     countryListUrl = "https://unogsng.p.rapidapi.com/countries"
 
     headers = {
         'x-rapidapi-host': "unogsng.p.rapidapi.com",
         'x-rapidapi-key': os.environ.get("RAPID_KEY")
-        }
+    }
 
     fetch = Fetch(movieSearchUrl, countryListUrl, headers)
 
@@ -42,7 +41,7 @@ def update_datebase():
                           item["title"],
                           item["year"],
                           item["synopsis"],
-                          _convert_seconds(item["runtime"]),    #convert HH:MM:SS
+                          _convert_seconds(item["runtime"]),  # convert HH:MM:SS
                           item["titledate"],
                           item["clist"],
                           item["imdbid"],
@@ -56,14 +55,13 @@ def update_datebase():
         except KeyError:
             pass
 
-        print("item added") #debugger: confirm item added
+        print("item added")  # debugger: confirm item added
 
-        if "99" in str(i):  #debugger: confirm each page commited
+        if "99" in str(i):  # debugger: confirm each page commited
             print("content added to dB")
 
 
 def query_database():
-
     temp = []
 
     columns = """vtype, 
@@ -89,6 +87,7 @@ def query_database():
 
     return temp
 
+
 def _convert_seconds(item):
     """convert seconds to HH:MM:SS format"""
     try:
@@ -97,4 +96,5 @@ def _convert_seconds(item):
     except TypeError:
         return None
 
-__all__=["update_datebase", "query_database"]
+
+__all__ = ["update_datebase", "query_database"]

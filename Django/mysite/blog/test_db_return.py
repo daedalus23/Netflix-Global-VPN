@@ -1,4 +1,4 @@
-from Fetch import query_database
+from .Fetch import query_database
 from datetime import timedelta as convert_seconds
 
 content = query_database()

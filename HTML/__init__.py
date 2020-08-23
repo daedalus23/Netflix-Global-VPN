@@ -1,14 +1,14 @@
 from bs4 import BeautifulSoup
-import WebDriver
-import re
+
 
 class HtmlParser:
 
     def __init__(self, html):
         self.html = BeautifulSoup(html, "html.parser")
 
-    def regex_search(self, regex, data):
-        """Regex pattern searchs List; strip None and return remaining"""
+    @staticmethod
+    def regex_search(regex, data):
+        """Regex pattern searches List; strip None and return remaining"""
 
         RawList = []
 
