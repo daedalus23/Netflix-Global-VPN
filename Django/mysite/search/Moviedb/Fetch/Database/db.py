@@ -4,7 +4,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import *
 
-dbPath = "sqlite:///C:\\Users\\james\\PycharmProjects\\Netflix-Global-VPN\\Django\\mysite\\blog\\Moviedb\\Moviedb.db"
+dbPath = "sqlite:///C:\\Users\\james\\PycharmProjects\\Netflix-Global-VPN\\Django\\mysite\\search\\Moviedb\\Moviedb.db"
 
 engine = create_engine(dbPath)
 Session = sessionmaker(bind=engine)

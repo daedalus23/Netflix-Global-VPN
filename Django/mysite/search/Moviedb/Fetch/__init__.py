@@ -74,7 +74,11 @@ def query_db():
                 poster"""
 
     with engine.connect() as connection:
-        result = connection.execute(f"select {columns} from movie")
+        result = connection.execute(
+            f"""SELECT {columns} 
+                FROM movie 
+                ORDER BY title"""
+        )
 
         for item in result:
             temp.append(item)
