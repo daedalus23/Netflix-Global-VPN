@@ -1,15 +1,28 @@
 from django.shortcuts import render
-from Django.mysite.search.Moviedb import query_db
+from django.core.paginator import Paginator
+from .Moviedb import query_db
 
 
 def home(request):
-    temp = query_db()
 
-    context = {
+    contentList = {
         'title': 'Home',
         'posts': query_db()
     }
-    return render(request, 'search/home.html', context)
+
+    # paginator = Paginator(contentList["posts"], 25)
+    #
+    # try:
+    #     page = int(request.GET.get("page", 1))
+    # except:
+    #     page = 1
+    #
+    # try:
+    #     content = paginator.page(page)
+    # except:
+    #     content = paginator.page(paginator.num_pages)
+
+    return render(request, 'search/home.html', contentList)
 
 
 def about(request):

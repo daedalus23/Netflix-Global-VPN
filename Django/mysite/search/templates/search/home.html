@@ -1,18 +1,40 @@
 {% extends "search/base.html" %}
 
-# once post from query are corrected change post.title, post.runtime, etc...
 
 {% block content %}
     {% for post in posts %}
         <article class="media content-section">
           <div class="media-body">
             <div class="article-metadata">
-              <a class="article-vtype">{{ post.vtype }}</a>
-              <small class="article-year">Year Released: {{ post.year }}</small>
+                <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
+                <small class="article-year">Year Released: {{ post.year }}</small>
             </div>
-            <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
+            <div>
+                {% if post.poster != None %}
+                    <img src="{{ post.poster }} alt="img">
+                {% elif post.img != None %}
+                    <img src="{{ post.img }}" alt="img">
+                {% else %}
+                    {{ pass }}
+                {% endif %}
             <p class="article-sysnopsis">Sysnopsis: {{ post.sysnopsis }}<p/>
-            <p> Runtime: {{ post.runtime }}</p>
+            <p class="article-counties">Countries: {{ post.countryList }}</p>
+            <p class="article-runtime">Runtime: {{ post.runtime }}</p>
+                {% if post.imdbRating == None %}
+                    {{ pass }}
+                {% else %}
+                    <p class="article-imdbrating">Imdb Rating: {{ post.imdbRating }}</p>
+                {% endif %}
+
+                {% if post.top250 == None or post.top250tv == None %}
+                    {{ pass }}
+                {% elif post.top250tv > 0 %}
+                    <p class="article-top250tv">Imdb Top 250 Tv: {{ post.top250tv }} </p>
+                {% elif post.top250 > 0 %}
+                    <p class="article-top250">Imdb Top 250: {{ post.top250 }} </p>
+                {% endif %}
+
+            </div>
           </div>
         </article>
     {% endfor %}
