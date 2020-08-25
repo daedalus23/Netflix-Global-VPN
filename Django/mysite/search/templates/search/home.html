@@ -2,7 +2,7 @@
 
 
 {% block content %}
-    {% for post in posts %}
+    {% for post in content  %}
         <article class="media content-section">
           <div class="media-body">
             <div class="article-metadata">
@@ -33,9 +33,64 @@
                 {% elif post.top250 > 0 %}
                     <p class="article-top250">Imdb Top 250: {{ post.top250 }} </p>
                 {% endif %}
-
             </div>
           </div>
         </article>
     {% endfor %}
 {% endblock content %}
+
+{% block top-navigate %}
+    <nav class="navigate">
+        <h2
+            {% if content.has_other_pages %}
+              <ul class="pagination">
+                {% if content.has_previous %}
+                  <li><a href="?page={{ content.previous_page_number }}">&laquo;Previous </a></li>
+                {% else %}
+                  <li class="disabled"><span>&laquo;Previous </span></li>
+                {% endif %}
+                {% for i in content.paginator.page_range %}
+                  {% if content.number == i %}
+                    <li class="active"><span>{{ i }}    ,<span class="sr-only">(current)</span></span></li>
+                  {% elif i <= content.number|add:2 and i >= content.number|add:-2 %}
+                    <li><a href="?page={{forloop.counter}}">{{forloop.counter}}    ,</a></li>
+                  {% endif %}
+                {% endfor %}
+                {% if content.has_next %}
+                  <li><a href="?page={{ content.next_page_number }}">&raquo; Next </a></li>
+                {% else %}
+                  <li class="disabled"><span>&raquo;Next</span></li>
+                {% endif %}
+              </ul>
+            {% endif %}
+        </h2>
+    </nav>
+{% endblock top-navigate %}
+
+{% block bottom-navigate %}
+    <nav class="navigate">
+        <h2
+            {% if content.has_other_pages %}
+              <ul class="pagination">
+                {% if content.has_previous %}
+                  <li><a href="?page={{ content.previous_page_number }}">&laquo;Previous </a></li>
+                {% else %}
+                  <li class="disabled"><span>&laquo;Previous </span></li>
+                {% endif %}
+                {% for i in content.paginator.page_range %}
+                  {% if content.number == i %}
+                    <li class="active"><span>{{ i }}    ,<span class="sr-only">(current)</span></span></li>
+                  {% elif i <= content.number|add:2 and i >= content.number|add:-2 %}
+                    <li><a href="?page={{forloop.counter}}">{{forloop.counter}}    ,</a></li>
+                  {% endif %}
+                {% endfor %}
+                {% if content.has_next %}
+                  <li><a href="?page={{ content.next_page_number }}">&raquo; Next </a></li>
+                {% else %}
+                  <li class="disabled"><span>&raquo;Next</span></li>
+                {% endif %}
+              </ul>
+            {% endif %}
+        </h2>
+    </nav>
+{% endblock bottom-navigate %}

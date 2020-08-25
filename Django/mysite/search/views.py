@@ -10,19 +10,19 @@ def home(request):
         'posts': query_db()
     }
 
-    # paginator = Paginator(contentList["posts"], 25)
-    #
-    # try:
-    #     page = int(request.GET.get("page", 1))
-    # except:
-    #     page = 1
-    #
-    # try:
-    #     content = paginator.page(page)
-    # except:
-    #     content = paginator.page(paginator.num_pages)
+    paginator = Paginator(contentList["posts"], 25)
 
-    return render(request, 'search/home.html', contentList)
+    try:
+        page = int(request.GET.get("page", 1))
+    except:
+        page = 1
+
+    try:
+        content = paginator.page(page)
+    except:
+        content = paginator.page(paginator.num_pages)
+
+    return render(request, 'search/home.html', {"content": content})
 
 
 def about(request):
