@@ -4,7 +4,7 @@ import requests
 class Fetch:
     countryResponse = None
     movieResponse = None
-    json_reponse = None
+    jsonResponse = None
     countryList = None
 
     def __init__(self, movieSearchUrl, countryListUrl, header):

@@ -4,6 +4,7 @@ from .model import Movie
 from .db import run
 from .db import engine
 from .db import create
+from datetime import timedelta
 
 
 def add_to_db(vtype=None,
@@ -23,10 +24,10 @@ def add_to_db(vtype=None,
               ):
 
     movie = Movie(vtype=vtype,
-                  title=title,
+                  title=title.lower(),
                   year=year,
                   sysnopsis=sysnopsis,
-                  runtime=runtime,
+                  runtime=convert_time(runtime),
                   titledate=titledate,
                   countryList=countryList,
                   imdbid=imdbid,
@@ -40,6 +41,15 @@ def add_to_db(vtype=None,
 
     create(engine)
     run(movie)
+
+
+def convert_time(seconds=None):
+    """Convert seconds into HH:MM:SS"""
+    try:
+        convertedTime = timedelta(seconds=seconds)
+        return str(convertedTime)
+    except TypeError:
+        return "0"
 
 
 __all__ = ["add_to_db"]

@@ -1,11 +1,14 @@
 from .Database import add_to_db
-from .Database.db import engine
+from .Database.db import session
+from .Database.model import Movie
 from .fetch import Fetch
 from .apiParser import Parser
 import os
 
 
 def update_db():
+    """Update movie dB"""
+
     movieSearchUrl = "https://unogsng.p.rapidapi.com/search"
     countryListUrl = "https://unogsng.p.rapidapi.com/countries"
     apiKey = os.environ.get("RAPID_KEY")
@@ -15,22 +18,22 @@ def update_db():
         'x-rapidapi-key': apiKey
     }
 
-    fetch = Fetch(movieSearchUrl, countryListUrl, headers)
+    f = Fetch(movieSearchUrl, countryListUrl, headers)
 
-    fetch.get_countries()
-    fetch.json_reponse = Parser.convert_json_dict(fetch.countryResponse.text)
-    fetch.countryList = Parser.string_creation(fetch.json_reponse)
+    f.get_countries()
+    f.jsonResponse = Parser.convert_json_dict(f.countryResponse.text)
+    f.countryList = Parser.string_creation(f.jsonResponse)
 
-    queryString = Parser.form_query_dict(fetch.countryList)
-    fetch.get_movies(queryString)
-    movies = Parser.convert_json_dict(fetch.movieResponse.text)
+    queryString = Parser.form_query_dict(f.countryList)
+    f.get_movies(queryString)
+    movies = Parser.convert_json_dict(f.movieResponse.text)
 
     for i in range(movies["total"]):
 
         queryString["offset"] = i * 100
 
-        fetch.get_movies(queryString)
-        movies = Parser.convert_json_dict(fetch.movieResponse.text)
+        f.get_movies(queryString)
+        movies = Parser.convert_json_dict(f.movieResponse.text)
 
         try:
             for item in movies["results"]:
@@ -49,41 +52,30 @@ def update_db():
                     item["top250"],
                     item["img"],
                     item["poster"]
-                          )
+                )
 
         except KeyError:
             pass
 
 
-def query_db():
+def query_db(searchValue=None):
+    """Query movie dB"""
+
     temp = []
 
-    columns = """vtype, 
-                title, 
-                year, 
-                sysnopsis, 
-                runtime, 
-                titledate,
-                countryList,
-                imdbid,
-                avgrating,
-                imdbRating,
-                top250tv,
-                top250,
-                img,
-                poster"""
+    if searchValue is None:
+        for row in session.query(Movie) \
+                .order_by(Movie.title) \
+                .all():
+            temp.append(row)
+        return temp
 
-    with engine.connect() as connection:
-        result = connection.execute(
-            f"""SELECT {columns} 
-                FROM movie 
-                ORDER BY title"""
-        )
-
-        for item in result:
-            temp.append(item)
-
-    return temp
+    else:
+        for row in session.query(Movie) \
+                .order_by(Movie.title) \
+                .filter(Movie.title.contains(searchValue.lower())):
+            temp.append(row)
+        return temp
 
 
 __all__ = ["update_db", "query_db"]
