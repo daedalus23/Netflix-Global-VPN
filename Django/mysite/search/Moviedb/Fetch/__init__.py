@@ -41,7 +41,7 @@ def update_db():
                     item["vtype"],
                     item["title"],
                     item["year"],
-                    item["synopsis"],
+                    item["sysnopsis"],
                     item["runtime"],
                     item["titledate"],
                     item["clist"],

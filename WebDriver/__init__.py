@@ -17,13 +17,18 @@ from time import sleep
 class Driver:
 
     def __init__(self, driverPath):
-        fireFoxOptions = webdriver.FirefoxOptions()
-        # fireFoxOptions.set_headless()
+        chromeOptions = webdriver.ChromeOptions()
+        chromeOptions.add_experimental_option("detach", True)
+        self.driver = webdriver.Chrome(executable_path=driverPath,
+                                       chrome_options=chromeOptions)
 
-        self.driver = webdriver.Firefox(executable_path=driverPath,
-                                        firefox_options=fireFoxOptions)
+        # fireFoxOptions = webdriver.FirefoxOptions()
+        # # fireFoxOptions.set_headless()
+        #
+        # self.driver = webdriver.Firefox(executable_path=driverPath,
+        #                                 firefox_options=fireFoxOptions)
 
-    def _get(self, url):
+    def get(self, url):
         """WebDriver goto URL"""
         self.driver.get(url)
 
@@ -33,6 +38,20 @@ class Driver:
         elem.send_keys(text)
         elem.send_keys(Keys.ENTER)
         sleep(2)  # seconds
+
+    def click(self, xpath):
+        """Find Xpath and click"""
+        elem = self.driver.find_element_by_xpath(xpath)
+        elem.click()
+
+    def click_css(self, selector):
+        """Find Css selector and click"""
+        elem = self.driver.find_element_by_css_selector(selector)
+        elem.click()
+
+    def open_tab(self, url):
+        """Open new tab"""
+        self.driver.execute_script(f"window.open('https://www.google.com/');")
 
     def page_source(self):
         """return html of current page"""
